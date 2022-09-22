@@ -26,7 +26,7 @@ function frontEndLoginFunction() {
                   console.log(json); 
                   console.log(`${json['username']}'s Role is ${json['role']}`);
                     //Check User's role
-                        if(json['role'] === 'teamlead'){
+                        if(json['role'] === 'Proj_Lead'){
                                 //showChatBtn.display = 'block';
                                 bodyWrapper.display = 'block';
                         }
