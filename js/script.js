@@ -32,7 +32,7 @@ function frontEndLoginFunction() {
                         }
                     })   }
         else {
-            let pls_login = document.querySelector('#pls-login');
+            //let pls_login = document.querySelector('#pls-login');
             //pls_login.textContent = "You're Now Being Redirected to the Login Page";
             console.log("Session ID object missing: page redirection in progress");
 
@@ -42,27 +42,18 @@ function frontEndLoginFunction() {
 
 
 frontEndLoginFunction()
-/*
-window.onload = () => {
-        $.getJSON('http://100069.pythonanywhere.com/chat/get-rooms/', function (data){
-                console.log(data);
-            })
-
-};  
-*/
 
 /*
 window.onload = () => {
         fetch('https://100069.pythonanywhere.com/chat/get-rooms/', 
                              {method:'GET',
                               headers: {
-                             'Access-Control-Allow-Origin': '*',
-                              
+                              'Accept': 'application/json',
                               'content-type':'application/json'}, 
-                              mode:'no-cors'
+                             //mode:'no-cors'
                              })
     .then(res => res.json())
-    .then(data =>{console.log(data)})
+    .then(data =>{console.log(data['Rooms'][0]['room_name'])})
     .catch(error => {console.log(error)})};
+#/
 
-*/
