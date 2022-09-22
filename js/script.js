@@ -1,7 +1,7 @@
 let getCurrentUrl = window.location.href;
 let checkSessionID = getCurrentUrl.includes('session_id');
-let showChatBtn = document.querySelector('#for_chat');
-let showRooms = document.querySelector('#showRooms');
+//let showChatBtn = document.querySelector('#for_chat');
+let bodyWrapper = document.querySelector('#wrapper');
 
 function redirectPage(){        
         window.location = 'https://100014.pythonanywhere.com/';  
@@ -27,40 +27,42 @@ function frontEndLoginFunction() {
                   console.log(`${json['username']}'s Role is ${json['role']}`);
                     //Check User's role
                         if(json['role'] === 'teamlead'){
-                                showChatBtn.display = 'block';
+                                //showChatBtn.display = 'block';
+                                bodyWrapper.display = 'block';
                         }
                     })   }
         else {
             let pls_login = document.querySelector('#pls-login');
-            pls_login.textContent = "You're Now Being Redirected to the Login Page";
+            //pls_login.textContent = "You're Now Being Redirected to the Login Page";
             console.log("Session ID object missing: page redirection in progress");
 
-            setTimeout('redirectPage()', 2000);
+            setTimeout('redirectPage()', 1000);
             console.log('Page successfully redirected!');
         }    };
 
 
 frontEndLoginFunction()
+/*
+window.onload = () => {
+        $.getJSON('http://100069.pythonanywhere.com/chat/get-rooms/', function (data){
+                console.log(data);
+            })
 
-function listRooms(){
-    fetch('https://100069.pythonanywhere.com/chat/get-chat/', 
-                {
-                    method: 'GET',
-                    headers: {'Content-Type':'application/json'},
-                    mode: 'no-cors'
-                }           
-         )
-        .then(res => res.json())
-        .then(res =>{console.log(res.map((usr)=>usr.data)).catch(error=>console.log(error));
-        /*
-        .then(res =>{
-            let htmlString = '';            
-            res.data.rooms.name.map((usr)=>
-                htmlString += `<p><a href='#'> ${usr}</a></p>`)
-                showRooms.innerHTML = htmlString; */
-    });
-            
-};
+};  
+*/
 
-listRooms();
-                    
+/*
+window.onload = () => {
+        fetch('https://100069.pythonanywhere.com/chat/get-rooms/', 
+                             {method:'GET',
+                              headers: {
+                             'Access-Control-Allow-Origin': '*',
+                              
+                              'content-type':'application/json'}, 
+                              mode:'no-cors'
+                             })
+    .then(res => res.json())
+    .then(data =>{console.log(data)})
+    .catch(error => {console.log(error)})};
+
+*/

@@ -1,9 +1,9 @@
 body {
   margin: 0 auto;
-  max-width: 800px;
+  /*max-width: 800px;*/
   padding: 0 20px;
 }
-
+/*
 .container {
   border: 2px solid #dedede;
   background-color: #f1f1f1;
@@ -55,7 +55,18 @@ button:hover {
 h2{
     font-family: 'Andale Mono, monospace, Courier New, monospace';
     color:  #45a049;
-}
+}*/ 
+
+/*
 #for_chat{
-   display: none;
+  display: none;.
+}*/
+
+
+h2{
+    font-family: 'Andale Mono, monospace, Courier New, monospace';
+    color:  #45a049;
+}
+#wrapper {
+    display: none;
 }
