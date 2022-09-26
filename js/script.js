@@ -44,8 +44,10 @@ function chat_api_teamlead(username){
     //call the api for get rooms
     const room_name_head = document.querySelector('#room_name_head');
     room_name_head.innerHTML = username + "'s Room";
+    
     $.ajax({
-        url: 'http://127.0.0.1:8000/chat/get-rooms/',
+        //url: 'http://127.0.0.1:8000/chat/get-rooms/',
+        url :'http://100069.pythonanywhere.com/chat/get-rooms/',
         type: 'GET',
         success: function (data) {
             console.log(data);
@@ -83,7 +85,7 @@ function chat_api_user(user_name,getSessionId){
     room_name_head.innerHTML = user_name + "'s Room";
     //call the api to create room for the user with the team lead
     $.ajax({
-        url: 'http://127.0.0.1:8000/chat/create-room/',
+        url: 'http://100069.pythonanywhere.com/chat/create-room/',
         type: 'POST',
         data: {
             'user_name': user_name,
@@ -124,7 +126,7 @@ function get_messages(){
     const current_user_name = this.getAttribute('data-user-name');
     $("#card-body").animate({ scrollTop: 20000000 }, "slow")
     $.ajax({
-        url: 'http://127.0.0.1:8000/chat/get-messages/',
+        url: 'http://100069.pythonanywhere.com/chat/get-messages/',
         type: 'POST',
         data: {
             'room_link': room_link
@@ -245,7 +247,7 @@ function send_message(){
     }
 
     $.ajax({
-        url:'http://127.0.0.1:8000/chat/send-message/',
+        url:'http://100069.pythonanywhere.com/chat/send-message/',
         type:'POST',
         data:{
             'user_name':user_name,
