@@ -32,8 +32,7 @@ function frontEndLoginFunction() {
                         }
                     })   }
         else {
-            //let pls_login = document.querySelector('#pls-login');
-            //pls_login.textContent = "You're Now Being Redirected to the Login Page";
+        
             console.log("Session ID object missing: page redirection in progress");
 
             setTimeout('redirectPage()', 1000);
@@ -55,5 +54,5 @@ window.onload = () => {
     .then(res => res.json())
     .then(data =>{console.log(data['Rooms'][0]['room_name'])})
     .catch(error => {console.log(error)})};
-#/
+*/
 
