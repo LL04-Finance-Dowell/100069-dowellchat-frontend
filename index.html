@@ -143,9 +143,9 @@
               if (data['role'] === 'Proj_Lead'){
                   chat_api_teamlead(current_username,role);
               }
-              if (data['role'] === 'User'){
-                window.location.href = 'chat-user.html';
-              }
+              // if (data['role'] === 'User'){
+              //     chat_api_user(current_user_name, getSessionId);
+              // }
           },
           error: function (data) {
               console.log(data);
