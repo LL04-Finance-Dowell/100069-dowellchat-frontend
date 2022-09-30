@@ -109,7 +109,7 @@ function get_room(){
     const room = localStorage.getItem('room');
     console.log(room);
     $.ajax({
-        url: 'http://127.0.0.1:8000/chat/get-room/',
+        url: 'https://100069.pythonanywhere.com/chat/get-room/',
         type: 'POST',
         data: {
             'room': room,
@@ -141,7 +141,7 @@ function get_messages(){
     console.log("current user :", current_user_name);
     $("#card-body").animate({ scrollTop: 20000000 }, "slow")
     $.ajax({
-        url: 'http://127.0.0.1:8000/chat/get-messages/',
+        url: 'https://100069.pythonanywhere.com/chat/get-messages/',
         type: 'POST',
         data: {
             'room': room
@@ -217,7 +217,7 @@ function send_message(){
     console.log(data2);
 
     $.ajax({
-        url:'http://127.0.0.1:8000/chat/send-message/',
+        url:'https://100069.pythonanywhere.com/chat/send-message/',
         type:'POST',
         data:data2,
         

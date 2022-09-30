@@ -163,7 +163,7 @@ function chat_api_teamlead(username,role){
     room_name_head.innerHTML = username + "'s Room";
     
     $.ajax({
-        url: 'http://127.0.0.1:8000/chat/get-rooms/',
+        url: 'https://100069.pythonanywhere.com/chat/get-rooms/',
         //url :'https://100069.pythonanywhere.com/chat/get-rooms/',
         type: 'POST',
         data :{
@@ -222,7 +222,7 @@ function get_messages(roomName){
    
     $("#card-body").animate({ scrollTop: 20000000 }, "slow")
     $.ajax({
-        url: 'http://127.0.0.1:8000/chat/get-messages/',
+        url: 'https://100069.pythonanywhere.com/chat/get-messages/',
         type: 'POST',
         data: {
             'room': roomName
@@ -302,7 +302,7 @@ function send_message(){
     console.log(data2);
 
     $.ajax({
-        url:'http://127.0.0.1:8000/chat/send-message/',
+        url:'https://100069.pythonanywhere.com/chat/send-message/',
         type:'POST',
         data:data2,
         

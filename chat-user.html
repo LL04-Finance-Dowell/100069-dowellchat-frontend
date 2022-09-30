@@ -126,7 +126,7 @@ function createRoom(data){
 
     console.log("calling create room api");
     $.ajax({
-        url: 'http://127.0.0.1:8000/chat/create-room/',
+        url: 'https://100069.pythonanywhere.com/chat/create-room/',
         type: 'POST',
         data: {
             'user_name': data['user_name'],
@@ -139,7 +139,7 @@ function createRoom(data){
             //save data in request.session
             localStorage.setItem('room',data['room_name'])
             //redirect to chat.html page with data
-            window.location.href = 'http://127.0.0.1:8080/chat.html'
+            window.location.href = 'https://github.com/LL04-Finance-Dowell/100069-dowellchat-frontend/blob/ea6feae54fa05523933896080b30c52bb20955b5/chat.html';
             
         },
         error: function (data) {
