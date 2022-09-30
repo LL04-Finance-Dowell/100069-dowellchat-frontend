@@ -50,23 +50,20 @@
     
 
         <div class="container">
-            <h1>Dowell Chat</h1>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 id="room_name_head"></h4>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-group" id="room_list">
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-8">
-                    <div class="card">
+            <div class="row justify-content-center">
+                <div class="col-md-10">
+                    <div class="card mt-5">
                         <div class="card-header" id="messages">
-                            <h4 id="room_name"></h4>
+                          <h3>User Side</h3>
+                            <div class="d-flex">
+                                <h4>Room Name: </h4>
+                                <h4 id="room_name"></h4>
+                            </div>
+                            <div class="d-flex">
+                                <h4>Members :  </h4>
+                                <h4 id="members"></h4>
+                            </div>
+                           
                         </div>
                         <div class="card-body" id="card-body">
                             <ul class="list-group" id="messages-list">
@@ -93,148 +90,68 @@
     <!-- place footer here -->
   </footer>
   <!-- Bootstrap JavaScript Libraries -->
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
+  <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
     integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous">
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"
     integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK" crossorigin="anonymous">
-  </script>
+  </script> -->
 
   <!-- add jquery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <script>
-  const getCurrentUrl = window.location.href;
-  console.log(getCurrentUrl);
-  const checkSessionID = getCurrentUrl.includes('session_id');
-  console.log(checkSessionID);
-  function login_function(){
-      if (checkSessionID === true) {
-          // Making getSessionId a global variable with 'window'
-          window.getSessionId = getCurrentUrl.split('session_id=')[1];
-          fetch_profile_data(getSessionId);
-      }
-      else {
-          console.log("Session ID object missing: page redirection in progress");
-          //setTimeout('redirectPage()', 1000);
-          console.log('Page successfully redirected!');
-      }
-  }
-  
-  function fetch_profile_data(getSessionId){
-      $.ajax({
-          url: 'https://100014.pythonanywhere.com/api/profile/',
-          type: 'POST',
-          data: {
-              'key': getSessionId
-          },
-          success: function (data) {
-              console.log(data);
-              const current_username = data['username'];
-              const role = data['role'];
+//get room
 
-              localStorage.setItem('current_username',data['username']);
-              localStorage.setItem('role',data['role']);
-
-              console.log("Current user :", current_username);
-              console.log("Current user role :", role);
-
-              if (data['role'] === 'Proj_Lead'){
-                  chat_api_teamlead(current_username,role);
-              }
-              // if (data['role'] === 'User'){
-              //     chat_api_user(current_user_name, getSessionId);
-              // }
-          },
-          error: function (data) {
-              console.log(data);
-          }
-      })
-  }
-  
-  login_function();
-
-
-  
-function chat_api_teamlead(username,role){
-    //call the api for get rooms
-    const room_name_head = document.querySelector('#room_name_head');
-    room_name_head.innerHTML = username + "'s Room";
-    
+function get_room(){
+    console.log("calling get room api");
+    const room = localStorage.getItem('room');
+    console.log(room);
     $.ajax({
-        url: 'http://127.0.0.1:8000/chat/get-rooms/',
-        //url :'https://100069.pythonanywhere.com/chat/get-rooms/',
+        url: 'http://127.0.0.1:8000/chat/get-room/',
         type: 'POST',
-        data :{
-            'user_name': username,
-            'role': role
+        data: {
+            'room': room,
         },
         success: function (data) {
+            console.log("get room api called");
             console.log(data);
-            const roomList = document.querySelector('#room_list');
-        
-            for (let i = 0; i < data.length; i++) {
-                let roomLink = document.createElement('a');
-                let roomItem = document.createElement('li');
-                roomLink.setAttribute('href', '');
-                
-                roomLink.setAttribute('data-room', data[i]['room_name']);
-                roomLink.setAttribute('data-user-name', username);
-                
-                roomLink.setAttribute('id', 'room');
+            const room_name = document.getElementById('room_name');
+            room_name.innerHTML = data.room_name;
+            const members = document.getElementById('members');
+            members.innerHTML = data.members;
 
-                //add event listener to the button
-                roomLink.addEventListener('click',function(e){
-                      e.preventDefault();
-                      const roomName = this.getAttribute('data-room');
-                      console.log(roomName);
-                      localStorage.setItem('room',roomName);
-                      //localStorage.setItem('user_name',username);
-                      //split user name from room name
-                      //const receiver_name = roomName.split('_')[0];
-                      //console.log(receiver_name);
-                      //localStorage.setItem('receiver',receiver_name);
-                      get_messages(roomName);
-                });
-                
-                roomItem.innerHTML = data[i].room_name;
-                roomLink.appendChild(roomItem);
-                roomList.appendChild(roomLink);
-            }
+            get_messages();
         },
         error: function (data) {
             console.log(data);
-            
         }
     })
 }
-
-
+get_room();
 
 //get message
 
-function get_messages(roomName){
-    event.preventDefault();
-    console.log("calling get messages api");
-    const current_user_name = localStorage.getItem('current_username');
-    
-   
+function get_messages(){
+    console.log("Message recieved");
+    const room = localStorage.getItem('room');
+    const current_user_name = localStorage.getItem('user_name');
+    console.log("current room :", room);
+    console.log("current user :", current_user_name);
     $("#card-body").animate({ scrollTop: 20000000 }, "slow")
     $.ajax({
         url: 'http://127.0.0.1:8000/chat/get-messages/',
         type: 'POST',
         data: {
-            'room': roomName
+            'room': room
         },
         success: function (data) {
-          console.log("Message recieved");
             console.log(data);
-
             const messagesList = document.querySelector('#messages-list');
-            console.log ("Current user :" ,current_user_name);
-            //console.log(data[0].sender + "sender name");
+
             if (data.length > 0){
+
             messagesList.innerHTML = '';
             for (let i = 0; i < data.length; i++) {
             
@@ -242,7 +159,7 @@ function get_messages(roomName){
                 let messageItemDiv = document.createElement('div');
                 let messageUser = document.createElement('span');
 
-                if (data[i].sender == current_user_name){
+                if (data[i].sender === current_user_name){
                     messageItem.innerHTML = data[i].message;
                     messageItem.setAttribute('class','list-group-item');
                     messageItemDiv.setAttribute('class','right');
@@ -281,14 +198,12 @@ function send_message(){
     //convert to json
     const data = Object.fromEntries(formData.entries());
     console.log(data);
-    //get the current 
+
     const room = localStorage.getItem('room');
-    console.log("room->",room);
-    const sender = localStorage.getItem('current_username');
-    console.log("sender->",sender);
+    const sender = localStorage.getItem('user_name');
     //const receiver = localStorage.getItem('receiver');
     const message = data['message'];
-    //console.log(message);
+    console.log(message);
     //dont send empty messages
     if (message === ''){
         return false;
@@ -311,15 +226,15 @@ function send_message(){
             console.log(data);
             //clear the input 
             document.querySelector('#message').value = '';
+            console.log(room);
             get_messages();
-
+            //get_room();
         },
         error: function (data) {
             console.log(data);
         }
     })
 }
-
 
 
 
@@ -332,8 +247,9 @@ else{
     console.log('btnSend not found');
 }
 
+setInterval(get_messages, 4000);
 
-  </script>
+</script>
 
 </body>
 
