@@ -44,7 +44,7 @@
             background: #FFFFFF;
             border: 0.5px solid #E6E6E6;
             border-radius: 40px;
-            height: 30rem; ;
+            height: 28rem;
             overflow-y: scroll;
         }
         .form-control{
@@ -177,8 +177,8 @@
         <div class="container">
             <div class="row">
                 <div class="header d-flex justify-content-between align-items-center py-4">
-                    <h1 class="room-head">
-                        Admin Chat Rooms
+                    <h1 class="room-head" id="room-head">
+                        
                     </h1>
                     <button type="submit" class="btn btn-primary btn-end" id="endChat">End Chat </button>
                 </div>
@@ -262,14 +262,16 @@
                 console.log(data);
                 const current_username = data['username'];
                 const role = data['role'];
-  
+                const room_head = document.getElementById('room-head');
+                room_head.innerHTML = current_username + ' Chat Room';
+
                 localStorage.setItem('current_username',data['username']);
                 localStorage.setItem('role',data['role']);
   
                 console.log("Current user :", current_username);
                 console.log("Current user role :", role);
   
-                if (data['role'] === 'Proj_Lead'){
+                if (data['role'] === 'Proj_lead'){
                     chat_api_teamlead(current_username,role);
                 }
                 // if (data['role'] === 'User'){
