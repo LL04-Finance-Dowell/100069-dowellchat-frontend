@@ -205,6 +205,9 @@
                           <div class="right" id="right">
                           </div>
                         </ul>
+                        <div class="right" id="endMsg">
+                            
+                        </div>
                     </div>
                     <div class="card-footer">
                         <form id="sendMessage" method="POST" class="d-flex">
@@ -440,9 +443,16 @@
           success: function (data) {
             console.log("Message sent");
               console.log(data);
-              //clear the input 
-              document.querySelector('#message').value = '';
-             get_messages(room);
+             if (data.status === 'success'){
+                  //clear the input 
+                document.querySelector('#message').value = '';
+                get_messages(room);
+            }
+            else{
+                const endMsg = document.querySelector('#endMsg');
+                endMsg.innerHTML = data.Error;
+                document.querySelector('#message').value = '';
+            }
   
           },
           error: function (data) {
@@ -482,6 +492,42 @@
 
     const room_name = document.querySelector('#room_name');
         room_name.innerHTML = 'Select a room';
+
+     
+function endChat(){
+    //document.querySelector('#loading').style.display = 'block';
+   
+    //window.location.href = 'https://100069.pythonanywhere.com/chat/';
+    //ajax call to end chat
+    $.ajax({
+        url:'https://100069.pythonanywhere.com/chat/end-chat/',
+        //url :'http://127.0.0.1:8000/chat/end-chat/',
+        type:'POST',
+        data:{
+            'room':localStorage.getItem('room'),
+        },
+        success: function (data) {
+            console.log(data);
+            //localStorage.clear();
+            console.log("chat ended");
+            //alert("Chat Ended");
+            //window.location.href = 'index.html';
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    })
+    
+}
+
+const endChatBtn = document.querySelector('#endChat');
+if (endChatBtn){
+    endChatBtn.addEventListener('click',endChat)
+}
+else{
+    console.log('endChatBtn not found');
+}
+
     </script>
 
 
